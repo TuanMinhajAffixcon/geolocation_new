@@ -8,12 +8,9 @@ import plotly.express as px
 import numpy as np
 import folium
 from streamlit_folium import folium_static
-import pyodbc
 import os
-from dotenv import load_dotenv
 from collections import Counter
 from itertools import combinations
-load_dotenv()
 # Set up Streamlit app
 
 st.set_page_config(page_title='Geo Segmentation',page_icon=':earth_asia:',layout='wide')
