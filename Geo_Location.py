@@ -8,7 +8,6 @@ import plotly.express as px
 import numpy as np
 import folium
 from streamlit_folium import folium_static
-import pyodbc
 import os
 from dotenv import load_dotenv
 load_dotenv()
