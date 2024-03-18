@@ -9,7 +9,6 @@ import numpy as np
 import folium
 from streamlit_folium import folium_static
 import os
-from dotenv import load_dotenv
 load_dotenv()
 # Set up Streamlit app
 
