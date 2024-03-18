@@ -9,7 +9,7 @@ import numpy as np
 import folium
 from streamlit_folium import folium_static
 import os
-load_dotenv()
+
 # Set up Streamlit app
 
 st.set_page_config(page_title='Geo Segmentation',page_icon=':earth_asia:',layout='wide')
