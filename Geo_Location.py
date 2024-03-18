@@ -193,7 +193,7 @@ if user_input_lat and user_input_lon :
 
         day_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-        col1,col2=st.columns((0.6,0.4))
+        col1,col2=st.columns((2))
         with col1:
             folium_static(m)
         fig1 = px.histogram(filtered_df, x=filtered_df['datetimestamp'].dt.hour, nbins=24, labels={'datetimestamp': 'Hour of Day', 'count': 'Count'})
