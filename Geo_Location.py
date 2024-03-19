@@ -193,9 +193,9 @@ if user_input_lat and user_input_lon :
 
         day_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-        col1,col2=st.columns((2))
-        with col1:
-            folium_static(m)
+        # col1=st.columns((1))
+        # with col1:
+        folium_static(m)
         fig1 = px.histogram(filtered_df, x=filtered_df['datetimestamp'].dt.hour, nbins=24, labels={'datetimestamp': 'Hour of Day', 'count': 'Count'})
         filtered_df['day_of_week'] = filtered_df['datetimestamp'].dt.dayofweek.map(lambda x: day_names[x])
         fig2 = px.histogram(filtered_df, x=filtered_df['day_of_week'], nbins=7,
@@ -217,11 +217,11 @@ if user_input_lat and user_input_lon :
             'yaxis': {'showgrid': False,'title': 'Total Count'},
         })
 
-        with col2:
-            st.write("Histogram of Hour Variations")
-            st.plotly_chart(fig1)
-            st.write("Histogram of Day Variations")
-            st.plotly_chart(fig2)
+        # with col1:
+        st.write("Histogram of Hour Variations")
+        st.plotly_chart(fig1)
+        st.write("Histogram of Day Variations")
+        st.plotly_chart(fig2)
 
     else:
         st.warning("No Records Founds")

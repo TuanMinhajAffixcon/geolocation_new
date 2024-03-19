@@ -114,6 +114,14 @@ else:
 if len(niche_list)>0:
     selected_segments=niche_list
 
+select_all_segments = st.checkbox("Select All Segments",value=True)
+
+# If the "Select All Segments" checkbox is checked, select all segments
+if select_all_segments:
+    selected_segments = selected_segments
+else:
+    # Create a multiselect widget
+    selected_segments = st.multiselect("Select one or more segments:", selected_segments)
 
 segment_category_dict = df_seg.set_index('segment_name')['category'].to_dict()
 result_dict = {}
@@ -204,3 +212,19 @@ st.text(f"No of records in selected filters: {count}")
 
 with st.expander("View filtered Sample Data"):
     st.write(filtered_df.sample(10))
+
+selections = [
+    {"selected_industry": selected_industry},
+    {"niche_list": selected_segments},
+    {"age_range_filter": age_range_filter} if  'All' not in age_range_filter else {},
+    {"Gender_filter": Gender_filter} if not 'All' in Gender_filter else {},
+    {"Income_filter": Income_filter} if not 'All' in Income_filter else {},
+
+]
+flat_dict = {}
+for item in selections:
+    flat_dict.update({key: str(value) for key, value in item.items()})
+selection_df = pd.DataFrame([flat_dict]).T.rename(columns={0: 'Selections'})
+csv=selection_df.to_csv().encode('utf-8')
+st.write(selection_df)
+st.download_button("Download Selection table",data=csv, file_name="Selection.csv")
