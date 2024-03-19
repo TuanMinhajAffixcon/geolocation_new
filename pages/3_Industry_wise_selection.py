@@ -114,7 +114,7 @@ else:
 if len(niche_list)>0:
     selected_segments=niche_list
 
-select_all_segments = st.checkbox("Select All Segments",value=True)
+select_all_segments=st.toggle("Select All Segments", value=True)
 
 # If the "Select All Segments" checkbox is checked, select all segments
 if select_all_segments:
@@ -227,4 +227,5 @@ for item in selections:
 selection_df = pd.DataFrame([flat_dict]).T.rename(columns={0: 'Selections'})
 csv=selection_df.to_csv().encode('utf-8')
 st.write(selection_df)
+
 st.download_button("Download Selection table",data=csv, file_name="Selection.csv")
