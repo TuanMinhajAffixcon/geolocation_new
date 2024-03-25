@@ -95,10 +95,13 @@ df = df[(df['datetimestamp'] >= selected_start_date) & (df['datetimestamp'] <= s
 st.text(f"Number of records within Date Range: {len(df)}")
 
 # User input for specific locations in Australia
-user_input_lat = st.sidebar.text_input("Enter a User latitude:", value="-33.8833")
-user_input_lon = st.sidebar.text_input("Enter a User longitude :", value="151.2050")
+user_input_lat = st.sidebar.text_input("Enter a User latitude:", value="-37.82968153089708")
+user_input_lon = st.sidebar.text_input("Enter a User longitude :", value="145.05531534492368")
 
 
+center = (-37.82968153089708, 145.05531534492368)
+if user_input_lat =='-37.82968153089708' and user_input_lon=='145.05531534492368':
+    st.sidebar.text("Dan Murphy's Camberwell")
 
 if dist == 'Kilometers':
     radius_input = st.slider("Select radius (in kilometers):", min_value=1, max_value=100, value=10)
@@ -137,8 +140,15 @@ if user_input_lat and user_input_lon :
     st.text(f"Number of all devices within {radius_input} km radius: {count_within_radius}")
 
     # Draw a circle around the user-specified location
-    circle_points = generate_circle_points(user_lat, user_lon, radius_input)
-    folium.PolyLine(circle_points, color='green', weight=2.5, opacity=1).add_to(m)
+    # circle_points = generate_circle_points(user_lat, user_lon, radius_input)
+    # folium.PolyLine(circle_points, color='green', weight=2.5, opacity=1).add_to(m)
+    folium.Circle(
+    location=center,
+    radius=15,
+    color='green',
+    fill=True,
+    fill_opacity=0.4,
+    ).add_to(m)
     filtered_df = df[df.apply(lambda row: haversine(user_lat, user_lon, row['latitude'], row['longitude']) <= radius_input, axis=1)]
     filtered_df_maid_unique_count = filtered_df['maid'].nunique()
 
@@ -196,6 +206,20 @@ if user_input_lat and user_input_lon :
         # col1=st.columns((1))
         # with col1:
         folium_static(m)
+        # filtered_df_hr=filtered_df[['datetimestamp']].copy()
+        # filtered_df_hr['hour'] = filtered_df_hr['datetimestamp'].dt.hour
+        #         # Group by 'hour' and get count for each hour
+        # hourly_counts = filtered_df_hr.groupby('hour').size().reset_index(name='count')
+
+        # # Compute cumulative sum and cumulative sum percentage
+        # hourly_counts['cumulative_sum'] = hourly_counts['count'].cumsum()
+        # hourly_counts['cumulative_percentage'] = (hourly_counts['cumulative_sum'] / hourly_counts['count'].sum()) * 100
+
+        # # st.write(hourly_counts)
+        # total_count_70_percent = hourly_counts[hourly_counts['cumulative_percentage'] <= 70]['count'].sum()
+
+        # st.write("Total count that contributes to 70% of cumulative percentage:", total_count_70_percent)
+
         fig1 = px.histogram(filtered_df, x=filtered_df['datetimestamp'].dt.hour, nbins=24, labels={'datetimestamp': 'Hour of Day', 'count': 'Count'})
         filtered_df['day_of_week'] = filtered_df['datetimestamp'].dt.dayofweek.map(lambda x: day_names[x])
         fig2 = px.histogram(filtered_df, x=filtered_df['day_of_week'], nbins=7,
