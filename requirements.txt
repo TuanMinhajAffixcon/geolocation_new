@@ -238,7 +238,6 @@ python-json-logger==2.0.7
 python-louvain==0.16
 pytz==2023.3.post1
 pytz-deprecation-shim==0.1.0.post0
-pyvis==0.3.2
 pywin32==306
 pywinpty==2.0.11
 PyYAML==6.0.1
